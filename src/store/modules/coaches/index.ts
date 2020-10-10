@@ -1,5 +1,4 @@
 import { Module } from 'vuex'
-import { uuid } from "vue-uuid";
 
 import { RootState } from '@/store/types'
 import { CoachesState } from './types'
@@ -11,7 +10,7 @@ function getCoachesState(): CoachesState {
   return {
     coaches: [
       {
-        id: uuid.v4(),
+        id: 'c1',
         firstName: 'Maximilian',
         lastName: 'Schwarzmüller',
         areas: ['frontend', 'backend', 'career'],
@@ -20,7 +19,7 @@ function getCoachesState(): CoachesState {
         hourlyRate: 30
       },
       {
-        id: uuid.v4(),
+        id: 'c2',
         firstName: 'Julie',
         lastName: 'Jones',
         areas: ['frontend', 'career'],

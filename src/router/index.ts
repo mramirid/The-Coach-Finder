@@ -20,6 +20,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/coaches/:id',
     component: CoachDetail,
+    props: true,
     meta: { title: 'Coach Detail' },
     children: [
       {
