@@ -1,6 +1,6 @@
 <template>
   <li>
-    <h3>{{ coach.fullName }}</h3>
+    <h3>{{ fullName }}</h3>
     <h4>${{ coach.hourlyRate }}/hour</h4>
     <div>
       <base-badge
