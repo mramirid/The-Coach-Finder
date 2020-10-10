@@ -1,4 +1,4 @@
-# latihan
+# Coach Finder App
 
 ## Project setup
 ```
