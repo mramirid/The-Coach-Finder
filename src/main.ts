@@ -6,6 +6,7 @@ import store from './store/index'
 import BaseCard from './components/ui/BaseCard.vue'
 import BaseButton from './components/ui/BaseButton.vue'
 import BaseBadge from './components/ui/BaseBadge.vue'
+import BaseSpinner from './components/ui/BaseSpinner.vue'
 
 createApp(App)
   .use(store)
@@ -13,4 +14,5 @@ createApp(App)
   .component('base-card', BaseCard)
   .component('base-button', BaseButton)
   .component('base-badge', BaseBadge)
+  .component('base-spinner', BaseSpinner)
   .mount('#app')

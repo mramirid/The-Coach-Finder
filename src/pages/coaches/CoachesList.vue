@@ -3,11 +3,15 @@
   <base-card>
     <div class="controls">
       <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
-      <base-button v-if="!isCoach" to="/register">
+      <base-button v-if="!isCoach && !isLoading" to="/register">
         Register as Coach
       </base-button>
     </div>
-    <ul v-if="hasCoaches">
+
+    <div v-if="isLoading">
+      <base-spinner />
+    </div>
+    <ul v-else-if="hasCoaches">
       <coach-item
         v-for="coach in filteredCoaches"
         :key="coach.id"
@@ -33,6 +37,7 @@ export default defineComponent({
   },
   data() {
     return {
+      isLoading: false,
       filters: {
         frontend: true,
         backend: true,
@@ -47,14 +52,13 @@ export default defineComponent({
     setFilters(updatedFilters: Filters) {
       this.filters = updatedFilters;
     },
-    loadCoaches() {
-      this.$store.dispatch("coaches/loadCoaches");
+    async loadCoaches() {
+      this.isLoading = true;
+      await this.$store.dispatch("coaches/loadCoaches");
+      this.isLoading = false;
     },
   },
   computed: {
-    hasCoaches() {
-      return this.$store.getters["coaches/hasCoaches"] as boolean;
-    },
     filteredCoaches() {
       const coaches = this.$store.getters["coaches/coaches"] as Coach[];
       return coaches.filter((coach) => {
@@ -69,7 +73,7 @@ export default defineComponent({
         }
       });
     },
-    ...mapGetters("coaches", ["isCoach"]),
+    ...mapGetters("coaches", ["isCoach", "hasCoaches"]),
   },
 });
 </script>
