@@ -74,7 +74,7 @@
           v-model="areas.value"
           @blur="clearValidity('areas')"
         />
-        <label for="career">Career Development</label>
+        <label for="career">Career Advisory</label>
       </div>
       <p v-if="!areas.isValid">At least 1 expertise must be selected</p>
     </div>
