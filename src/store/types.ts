@@ -1,1 +1,6 @@
-export interface RootState { }
+/*
+ * Root state types 
+ */
+export interface RootState {
+  currentUserId: string;
+}

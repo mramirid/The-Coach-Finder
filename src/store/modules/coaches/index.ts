@@ -8,6 +8,7 @@ import coachesActions from './actions'
 
 function getCoachesState(): CoachesState {
   return {
+    userIsCoach: false,
     coaches: [
       {
         id: 'c1',
