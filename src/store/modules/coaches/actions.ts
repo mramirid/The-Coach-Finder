@@ -5,6 +5,10 @@ import { RootState } from '@/store/types'
 import { CoachesState } from './types'
 import Coach from '@/models/Coach'
 
+type FirebaseRawCoaches = {
+  [id: string]: Coach;
+}
+
 const counterActions: ActionTree<CoachesState, RootState> = {
   async registerCoach(context, coach: Coach) {
     const coachId = context.rootGetters.currentUserId
@@ -18,6 +22,21 @@ const counterActions: ActionTree<CoachesState, RootState> = {
       context.commit('registerCoach', coach)
     } else {
       throw new Error("Could not save data");
+    }
+  },
+  async loadCoaches(context) {
+    const response = await axios.get<FirebaseRawCoaches>(
+      `${process.env.VUE_APP_FIREBASE_URL}coaches.json`
+    )
+
+    if (response.statusText === "OK") {
+      const coaches = Object.keys(response.data).map<Coach>(key => {
+        response.data[key].id = key
+        return response.data[key];
+      })
+      context.commit('setCoaches', coaches)
+    } else {
+      throw new Error("Could not fetch all data");
     }
   }
 }

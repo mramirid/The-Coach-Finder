@@ -6,6 +6,9 @@ import { CoachesState } from './types'
 const coachesMutations: MutationTree<CoachesState> = {
   registerCoach(state, coach: Coach) {
     state.coaches.push(coach)
+  },
+  setCoaches(state, coaches: Coach[]) {
+    state.coaches = coaches
   }
 }
 

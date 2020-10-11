@@ -2,7 +2,7 @@
   <coach-filter @change-filter="setFilters" />
   <base-card>
     <div class="controls">
-      <base-button mode="outline">Refresh</base-button>
+      <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
       <base-button v-if="!isCoach" to="/register">
         Register as Coach
       </base-button>
@@ -40,9 +40,15 @@ export default defineComponent({
       } as Filters,
     };
   },
+  created() {
+    this.loadCoaches();
+  },
   methods: {
     setFilters(updatedFilters: Filters) {
       this.filters = updatedFilters;
+    },
+    loadCoaches() {
+      this.$store.dispatch("coaches/loadCoaches");
     },
   },
   computed: {
