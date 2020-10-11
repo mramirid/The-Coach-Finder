@@ -1,9 +1,21 @@
 <template>
+  <base-dialog
+    :show="!!errorMessage"
+    title="An error occurred!"
+    @close="closeErrorDialog"
+  >
+    <p>{{ errorMessage }}</p>
+  </base-dialog>
+
   <base-card>
     <header>
       <h2>Requests Received</h2>
     </header>
-    <ul v-if="hasRequests">
+
+    <div v-if="isLoading">
+      <base-spinner />
+    </div>
+    <ul v-else-if="hasRequests">
       <request-item
         v-for="request in receivedRequests"
         :key="request.id"
@@ -23,6 +35,30 @@ import RequestItem from "@/components/requests/RequestItem.vue";
 export default defineComponent({
   components: {
     RequestItem,
+  },
+  data() {
+    return {
+      isLoading: false,
+      errorMessage: null as string | null,
+    };
+  },
+  created() {
+    this.loadRequests();
+  },
+  methods: {
+    async loadRequests() {
+      try {
+        this.isLoading = true;
+        await this.$store.dispatch("requests/fetchRequests");
+      } catch (error) {
+        this.errorMessage = error.message || "Something went wrong!";
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    closeErrorDialog() {
+      this.errorMessage = null;
+    },
   },
   computed: {
     ...mapGetters("requests", {

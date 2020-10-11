@@ -6,6 +6,9 @@ import Request from '@/models/Request'
 const requestsMutations: MutationTree<RequestsState> = {
   addRequest(state, newRequest: Request) {
     state.requests.push(newRequest)
+  },
+  setRequests(state, requests: Request[]) {
+    state.requests = requests
   }
 }
 
