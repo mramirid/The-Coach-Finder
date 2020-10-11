@@ -24,7 +24,11 @@ const counterActions: ActionTree<CoachesState, RootState> = {
       throw new Error("Could not save data");
     }
   },
-  async loadCoaches(context) {
+  async loadCoaches(context, refreshClicked: boolean) {
+    if (!refreshClicked && !context.getters.shouldUpdate) {
+      return;
+    }
+
     const response = await axios.get<FirebaseRawCoaches>(
       `${process.env.VUE_APP_FIREBASE_URL}coaches.json`
     )
@@ -35,6 +39,7 @@ const counterActions: ActionTree<CoachesState, RootState> = {
         return response.data[key];
       })
       context.commit('setCoaches', coaches)
+      context.commit('setFetchTimestamp')
     } else {
       throw new Error("Could not fetch all data");
     }

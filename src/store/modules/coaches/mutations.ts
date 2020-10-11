@@ -9,6 +9,9 @@ const coachesMutations: MutationTree<CoachesState> = {
   },
   setCoaches(state, coaches: Coach[]) {
     state.coaches = coaches
+  },
+  setFetchTimestamp(state) {
+    state.lastFetch = new Date().getTime()
   }
 }
 
