@@ -1,5 +1,14 @@
 <template>
+  <base-dialog
+    :show="!!errorMessage"
+    title="An error occurred!"
+    @close="closeErrorDialog"
+  >
+    <p>{{ errorMessage }}</p>
+  </base-dialog>
+
   <coach-filter @change-filter="setFilters" />
+
   <base-card>
     <div class="controls">
       <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
@@ -38,6 +47,7 @@ export default defineComponent({
   data() {
     return {
       isLoading: false,
+      errorMessage: null as string | null,
       filters: {
         frontend: true,
         backend: true,
@@ -53,9 +63,17 @@ export default defineComponent({
       this.filters = updatedFilters;
     },
     async loadCoaches() {
-      this.isLoading = true;
-      await this.$store.dispatch("coaches/loadCoaches");
-      this.isLoading = false;
+      try {
+        this.isLoading = true;
+        await this.$store.dispatch("coaches/loadCoaches");
+      } catch (error) {
+        this.errorMessage = error.message || "Something went wrong!";
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    closeErrorDialog() {
+      this.errorMessage = null;
     },
   },
   computed: {
