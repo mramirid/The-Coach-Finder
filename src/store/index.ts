@@ -1,8 +1,9 @@
 import { createStore } from 'vuex'
 
 import { RootState } from './types'
-import coachesModule from './modules/coaches/index';
 import rootGetters from './getters';
+import coachesModule from './modules/coaches/index';
+import requestsModule from './modules/requests/index';
 
 function getRootState(): RootState {
   return {
@@ -14,6 +15,7 @@ export default createStore<RootState>({
   state: getRootState,
   getters: rootGetters,
   modules: {
-    coaches: coachesModule
+    coaches: coachesModule,
+    requests: requestsModule
   }
 })

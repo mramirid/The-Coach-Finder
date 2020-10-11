@@ -7,7 +7,9 @@ import requestsMutations from './mutations'
 import requestsActions from './actions'
 
 function getRequestsState(): RequestsState {
-  return {}
+  return {
+    requests: []
+  }
 }
 
 const requestsModule: Module<RequestsState, RootState> = {
