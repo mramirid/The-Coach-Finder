@@ -8,11 +8,6 @@ export interface AuthState {
 }
 
 /*
- * Mutation payload types
- */
-export interface SetUserMutationPayload extends AuthState { }
-
-/*
  * Firebase payload types for Sign up or Sign in with email & password
  *
  * FirebaseAuthRequestBody: Both for signup or signin request body payloads

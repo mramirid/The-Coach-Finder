@@ -6,10 +6,29 @@ import {
   AuthState,
   FirebaseAuthRequestBody,
   FirebaseSignupResponseBody,
-  FirebaseSigninResponseBody,
-  SetUserMutationPayload
+  FirebaseSigninResponseBody
 } from './types'
 import UserAuthInput from '@/models/UserAuthInput'
+
+function saveUserAuthData(userAuthData: AuthState) {
+  localStorage.setItem('userId', userAuthData.userId || '')
+  localStorage.setItem('token', userAuthData.token || '')
+  localStorage.setItem('tokenExpiration', userAuthData.tokenExpiration || '')
+}
+
+function getUserAuthData(): AuthState {
+  return {
+    userId: localStorage.getItem('userId'),
+    token: localStorage.getItem('token'),
+    tokenExpiration: localStorage.getItem('tokenExpiration')
+  }
+}
+
+function clearUserAuthData() {
+  localStorage.removeItem('userId')
+  localStorage.removeItem('token')
+  localStorage.removeItem('tokenExpiration')
+}
 
 const authActions: ActionTree<AuthState, RootState> = {
   async signup(context, userAuthInput: UserAuthInput) {
@@ -24,11 +43,13 @@ const authActions: ActionTree<AuthState, RootState> = {
       )
 
       if (response.status < 400) {
-        context.commit('setUser', {
+        const userAuthData: AuthState = {
           userId: response.data.localId,
           token: response.data.idToken,
           tokenExpiration: response.data.expiresIn
-        } as SetUserMutationPayload)
+        }
+        saveUserAuthData(userAuthData)
+        context.commit('setUser', userAuthData)
       } else {
         throw new Error('Failed to signup')
       }
@@ -40,6 +61,12 @@ const authActions: ActionTree<AuthState, RootState> = {
         default:
           throw error
       }
+    }
+  },
+  tryAutoLogin(context) {
+    const userAuthData = getUserAuthData()
+    if (userAuthData.token && userAuthData.userId) {
+      context.commit('setUser', userAuthData)
     }
   },
   async login(context, userAuthInput: UserAuthInput) {
@@ -54,11 +81,13 @@ const authActions: ActionTree<AuthState, RootState> = {
       )
 
       if (response.status < 400) {
-        context.commit('setUser', {
+        const userAuthData: AuthState = {
           userId: response.data.localId,
           token: response.data.idToken,
           tokenExpiration: response.data.expiresIn
-        } as SetUserMutationPayload)
+        }
+        saveUserAuthData(userAuthData)
+        context.commit('setUser', userAuthData)
       } else {
         throw new Error('Failed to login')
       }
@@ -77,11 +106,12 @@ const authActions: ActionTree<AuthState, RootState> = {
     }
   },
   logout(context) {
+    clearUserAuthData()
     context.commit('setUser', {
       userId: null,
       token: null,
       tokenExpiration: null
-    } as SetUserMutationPayload)
+    } as AuthState)
   }
 }
 

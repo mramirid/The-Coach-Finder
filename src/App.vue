@@ -16,6 +16,9 @@ export default defineComponent({
   components: {
     TheHeader,
   },
+  created() {
+    this.$store.dispatch("auth/tryAutoLogin");
+  },
 });
 </script>
 
