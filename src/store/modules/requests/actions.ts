@@ -32,7 +32,7 @@ const requestsActions: ActionTree<RequestsState, RootState> = {
     }
   },
   async fetchRequests(context) {
-    const currentUserId = context.rootGetters.currentUserId as string
+    const currentUserId = context.rootGetters['auth/currentUserId'] as string
     const response = await axios.get<FirebaseRawRequests>(
       `${process.env.VUE_APP_FIREBASE_URL}requests/${currentUserId}.json`
     )

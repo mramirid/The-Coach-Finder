@@ -6,7 +6,7 @@ import { RequestsState } from './types'
 const requestsGetters: GetterTree<RequestsState, RootState> = {
   requests(state, _, __, rootGetters) {
     return state.requests.filter((coach) => {
-      return coach.coachId === rootGetters.currentUserId
+      return coach.coachId === rootGetters['auth/currentUserId']
     })
   },
   hasRequests(_, getters) {

@@ -11,7 +11,7 @@ type FirebaseRawCoaches = {
 
 const counterActions: ActionTree<CoachesState, RootState> = {
   async registerCoach(context, coach: Coach) {
-    const coachId = context.rootGetters.currentUserId
+    const coachId = context.rootGetters['auth/currentUserId'] as string
 
     const response = await axios.put<Coach>(
       `${process.env.VUE_APP_FIREBASE_URL}coaches/${coachId}.json`, coach

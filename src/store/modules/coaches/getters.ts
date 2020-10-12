@@ -13,7 +13,7 @@ const coachesGetters: GetterTree<CoachesState, RootState> = {
   },
   isCoach(_, getters, __, rootGetters) {
     const coaches = getters.coaches as Coach[]
-    const userId = rootGetters.currentUserId as string
+    const userId = rootGetters['auth/currentUserId'] as string
     return coaches.some(coach => coach.id === userId)
   },
   shouldUpdate(state) {
