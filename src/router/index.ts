@@ -7,6 +7,7 @@ import ContactCoach from '@/pages/requests/ContactCoach.vue'
 import RequestsReceived from '@/pages/requests/RequestsReceived.vue'
 import UserAuth from '@/pages/auth/UserAuth.vue'
 import NotFound from '@/pages/NotFound.vue'
+import store from '@/store/index'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -33,17 +34,27 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/register',
     component: CoachRegistration,
-    meta: { title: 'Coach Registration' }
+    meta: {
+      title: 'Coach Registration',
+      requiresAuth: true,
+      requiresNotCoach: true
+    }
   },
   {
     path: '/requests',
     component: RequestsReceived,
-    meta: { title: 'Requests' }
+    meta: {
+      title: 'Requests',
+      requiresAuth: true
+    }
   },
   {
     path: '/auth',
     component: UserAuth,
-    meta: { title: 'Auth' }
+    meta: {
+      title: 'Auth',
+      requiresNotAuth: true
+    }
   },
   {
     path: '/:notFound(.*)',
@@ -59,7 +70,16 @@ const router = createRouter({
 
 router.beforeEach((to, _, next) => {
   document.title = to.meta.title as string
-  next()
+
+  if (to.meta.requiresAuth && !store.getters['auth/isAuthenticated']) {
+    next('/auth')
+  } else if (to.meta.requiresNotAuth && store.getters['auth/isAuthenticated']) {
+    next('/coaches')
+  } else if (to.meta.requiresNotCoach && store.getters['coaches/isCoach']) {
+    next('/coaches')
+  } else {
+    next()
+  }
 })
 
 export default router

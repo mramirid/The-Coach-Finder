@@ -91,6 +91,7 @@ export default defineComponent({
 
       try {
         this.isLoading = true;
+
         switch (this.mode) {
           case AuthMode.LOGIN:
             await this.$store.dispatch("auth/login", this.userAuthInput);
@@ -99,7 +100,9 @@ export default defineComponent({
             await this.$store.dispatch("auth/signup", this.userAuthInput);
             break;
         }
-        this.$router.replace("/coaches");
+
+        const redirectUrl = `/${this.$route.query.redirect || "coaches"}`;
+        this.$router.replace(redirectUrl);
       } catch (error) {
         this.errorMessage = error.message || "Could not authenticate you";
       } finally {
