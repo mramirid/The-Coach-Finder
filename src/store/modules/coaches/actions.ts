@@ -11,14 +11,16 @@ type FirebaseRawCoaches = {
 
 const counterActions: ActionTree<CoachesState, RootState> = {
   async registerCoach(context, coach: Coach) {
-    const coachId = context.rootGetters['auth/currentUserId'] as string
+    const curUserId = context.rootGetters['auth/currentUserId'] as string
+    const curUserToken = context.rootGetters['auth/currentUserToken'] as string
 
     const response = await axios.put<Coach>(
-      `${process.env.VUE_APP_FIREBASE_URL}coaches/${coachId}.json`, coach
+      `${process.env.VUE_APP_FIREBASE_URL}coaches/${curUserId}.json?auth=${curUserToken}`,
+      coach
     )
 
     if (response.statusText === "OK") {
-      coach.id = coachId
+      coach.id = curUserId
       context.commit('registerCoach', coach)
     } else {
       throw new Error("Could not save data");

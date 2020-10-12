@@ -4,8 +4,10 @@ import { AuthState } from './types'
 import { SetUserMutationPayload } from './types'
 
 const authMutations: MutationTree<AuthState> = {
-  setUser(state, firebaseAuthResponse: SetUserMutationPayload) {
-    state = firebaseAuthResponse
+  setUser(state, payload: SetUserMutationPayload) {
+    state.userId = payload.userId
+    state.token = payload.token
+    state.tokenExpiration = payload.tokenExpiration
   }
 }
 

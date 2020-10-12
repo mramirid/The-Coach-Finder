@@ -32,9 +32,11 @@ const requestsActions: ActionTree<RequestsState, RootState> = {
     }
   },
   async fetchRequests(context) {
-    const currentUserId = context.rootGetters['auth/currentUserId'] as string
+    const curUserId = context.rootGetters['auth/currentUserId'] as string
+    const curUserToken = context.rootGetters['auth/currentUserToken'] as string
+
     const response = await axios.get<FirebaseRawRequests>(
-      `${process.env.VUE_APP_FIREBASE_URL}requests/${currentUserId}.json`
+      `${process.env.VUE_APP_FIREBASE_URL}requests/${curUserId}.json?auth=${curUserToken}`
     )
 
     if (response.statusText === "OK") {
@@ -43,7 +45,7 @@ const requestsActions: ActionTree<RequestsState, RootState> = {
         requests = Object.keys(response.data).map<Request>(key => {
           return {
             id: key,
-            coachId: currentUserId,
+            coachId: curUserId,
             email: response.data[key].email,
             message: response.data[key].message
           };
