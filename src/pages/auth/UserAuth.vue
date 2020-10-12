@@ -93,6 +93,7 @@ export default defineComponent({
         this.isLoading = true;
         switch (this.mode) {
           case AuthMode.LOGIN:
+            await this.$store.dispatch("auth/login", this.userAuthInput);
             break;
           case AuthMode.SIGNUP:
             await this.$store.dispatch("auth/signup", this.userAuthInput);

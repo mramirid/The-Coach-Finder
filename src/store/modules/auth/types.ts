@@ -8,7 +8,16 @@ export interface AuthState {
 }
 
 /*
+ * Mutation payload types
+ */
+export interface SetUserMutationPayload extends AuthState { }
+
+/*
  * Firebase payload types for Sign up or Sign in with email & password
+ *
+ * FirebaseAuthRequestBody: Both for signup or signin request body payloads
+ * FirebaseSignupResponseBody: For signup response body payload
+ * FirebaseSigninResponseBody: For signin response body payload
  */
 export interface FirebaseAuthRequestBody {
   email: string;
@@ -16,11 +25,22 @@ export interface FirebaseAuthRequestBody {
   returnSecureToken: boolean;
 }
 
-export interface FirebaseAuthResponseBody {
+export interface FirebaseSignupResponseBody {
   idToken: string;
   email: string;
   refreshToken: string;
   expiresIn: string;
   localId: string;
   kind: string;
+}
+
+export interface FirebaseSigninResponseBody {
+  displayName: string;
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
+  kind: string;
+  registered: boolean;
 }
