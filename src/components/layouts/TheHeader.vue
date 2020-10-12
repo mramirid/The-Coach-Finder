@@ -8,13 +8,38 @@
         <li>
           <router-link to="/coaches">All Coaches</router-link>
         </li>
-        <li>
+        <li v-if="isAuthenticated">
           <router-link to="/requests">Requests</router-link>
+        </li>
+        <li v-else>
+          <router-link to="/auth">Login</router-link>
+        </li>
+        <li>
+          <base-button v-if="isAuthenticated" @click="logout">
+            Logout
+          </base-button>
         </li>
       </ul>
     </nav>
   </header>
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import { mapGetters } from "vuex";
+
+export default defineComponent({
+  computed: {
+    ...mapGetters("auth", ["isAuthenticated"]),
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("auth/logout");
+      this.$router.replace("/coaches");
+    },
+  },
+});
+</script>
 
 <style scoped>
 header {

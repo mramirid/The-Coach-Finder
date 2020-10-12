@@ -75,6 +75,13 @@ const authActions: ActionTree<AuthState, RootState> = {
           throw error
       }
     }
+  },
+  logout(context) {
+    context.commit('setUser', {
+      userId: null,
+      token: null,
+      tokenExpiration: null
+    } as SetUserMutationPayload)
   }
 }
 

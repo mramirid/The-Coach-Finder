@@ -99,6 +99,7 @@ export default defineComponent({
             await this.$store.dispatch("auth/signup", this.userAuthInput);
             break;
         }
+        this.$router.replace("/coaches");
       } catch (error) {
         this.errorMessage = error.message || "Could not authenticate you";
       } finally {

@@ -9,6 +9,9 @@ const authGetters: GetterTree<AuthState, RootState> = {
   },
   currentUserToken(state) {
     return state.token
+  },
+  isAuthenticated(state) {
+    return !!state.token
   }
 }
 
