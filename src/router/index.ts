@@ -1,13 +1,27 @@
+import { defineAsyncComponent } from 'vue'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
-import CoachDetail from '@/pages/coaches/CoachDetail.vue'
 import CoachesList from '@/pages/coaches/CoachesList.vue'
-import CoachRegistration from '@/pages/coaches/CoachRegistration.vue'
-import ContactCoach from '@/pages/requests/ContactCoach.vue'
-import RequestsReceived from '@/pages/requests/RequestsReceived.vue'
-import UserAuth from '@/pages/auth/UserAuth.vue'
-import NotFound from '@/pages/NotFound.vue'
 import store from '@/store/index'
+
+const CoachDetail = defineAsyncComponent(() => {
+  return import('@/pages/coaches/CoachDetail.vue')
+})
+const CoachRegistration = defineAsyncComponent(() => {
+  return import('@/pages/coaches/CoachRegistration.vue')
+})
+const ContactCoach = defineAsyncComponent(() => {
+  return import('@/pages/requests/ContactCoach.vue')
+})
+const RequestsReceived = defineAsyncComponent(() => {
+  return import('@/pages/requests/RequestsReceived.vue')
+})
+const UserAuth = defineAsyncComponent(() => {
+  return import('@/pages/auth/UserAuth.vue')
+})
+const NotFound = defineAsyncComponent(() => {
+  return import('@/pages/NotFound.vue')
+})
 
 const routes: Array<RouteRecordRaw> = [
   {
