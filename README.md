@@ -1,12 +1,8 @@
 # Coach Finder App
 
-<br>
-
 <p align="center">
-  <img src="https://i.ibb.co/M6vszRv/Screenshot-2020-10-13-114445.png" alt="SS" height=450>
+  <img src="https://i.ibb.co/M6vszRv/Screenshot-2020-10-13-114445.png" alt="SS">
 </p>
-
-<br>
 
 ## How to run?
 
@@ -19,8 +15,6 @@ $ npm install
 ```
 
 3. Run
-
-<br>
 
 ## Project setup
 ```
@@ -45,10 +39,10 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-<br>
-
 ## Tags in commit history
 
 - Module 16 - Building the app (vue router, vuex, http request & transition)
 
 - Module 17 - Vue & authentication
+
+- Module 18 - Optimizing & deploying the app (Firebase hosting)
