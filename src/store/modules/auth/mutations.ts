@@ -6,7 +6,10 @@ const authMutations: MutationTree<AuthState> = {
   setUser(state, userAuthData: AuthState) {
     state.userId = userAuthData.userId
     state.token = userAuthData.token
-    state.tokenExpiration = userAuthData.tokenExpiration
+    state.didAutoLogout = false
+  },
+  setAutoLogout(state) {
+    state.didAutoLogout = true
   }
 }
 

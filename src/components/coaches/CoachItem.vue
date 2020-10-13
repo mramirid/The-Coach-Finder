@@ -34,7 +34,7 @@ export default defineComponent({
       return `${this.coach.firstName} ${this.coach.lastName}`;
     },
     coachContactLink(): string {
-      return `${this.$route.path}/${this.coach.id}/contact`;
+      return `${this.$route.path}/${this.coach.id}/contact?displayForm=true`;
     },
     coachDetailsLink(): string {
       return `${this.$route.path}/${this.coach.id}`;

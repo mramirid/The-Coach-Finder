@@ -9,6 +9,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapGetters } from "vuex";
 
 import TheHeader from "./components/layouts/TheHeader.vue";
 
@@ -18,6 +19,18 @@ export default defineComponent({
   },
   created() {
     this.$store.dispatch("auth/tryAutoLogin");
+  },
+  computed: {
+    ...mapGetters("auth", {
+      didAutoLogout: "didAutoLogout",
+    }),
+  },
+  watch: {
+    didAutoLogout(curValue: boolean, oldValue: boolean) {
+      if (curValue && curValue !== oldValue) {
+        this.$router.replace("/coaches");
+      }
+    },
   },
 });
 </script>

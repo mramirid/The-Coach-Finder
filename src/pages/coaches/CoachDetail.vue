@@ -11,7 +11,9 @@
       <base-card>
         <header>
           <h2>Interested? Reach out now!</h2>
-          <base-button :to="contactLink">Contact</base-button>
+          <base-button v-if="!isFormDisplayed" :to="coachContactLink">
+            Contact
+          </base-button>
         </header>
         <router-view />
       </base-card>
@@ -45,9 +47,11 @@ export default defineComponent({
   data() {
     return {
       selectedCoach: null as Coach | null,
+      isFormDisplayed: null as boolean | null,
     };
   },
   created() {
+    this.isFormDisplayed = !!this.$route.query.displayForm;
     this.selectedCoach =
       (this.$store.getters["coaches/coaches"] as Coach[]).find((coach) => {
         return coach.id === this.id;
@@ -58,7 +62,12 @@ export default defineComponent({
       return `${this.selectedCoach?.firstName} ${this.selectedCoach?.lastName}`;
     },
     coachContactLink(): string {
-      return `${this.$route.path}/${this.id}/contact`;
+      return `${this.$route.path}/contact?displayForm=true`;
+    },
+  },
+  watch: {
+    "$route.query.displayForm": function (displayForm: string) {
+      this.isFormDisplayed = !!displayForm;
     },
   },
 });

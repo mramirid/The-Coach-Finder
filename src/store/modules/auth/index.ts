@@ -10,7 +10,7 @@ function getAuthState(): AuthState {
   return {
     userId: null,
     token: null,
-    tokenExpiration: null,
+    didAutoLogout: false
   }
 }
 
